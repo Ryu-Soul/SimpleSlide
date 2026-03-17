@@ -1,6 +1,17 @@
 import { NavLink } from "react-router-dom"
+import { useEffect } from "react"
 
 function Landing () {
+    useEffect(() => {
+  const checkHealth = async () => {
+    const res = await fetch("http://localhost:5000/health")
+    const data = await res.json()
+    console.log(data)
+  }
+
+  checkHealth()
+}, [])
+
     return (
         <main>
             <section className="hero">
