@@ -1,12 +1,18 @@
 import { NavLink, useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { useAuth } from "../context/AuthContext"
 import "../styles/login.scss"
 
 function Login () {
+
+    //Formulaire
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
     const [message, setMessage] = useState("")
+
+    //Authentification
+    const { login } = useAuth()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -24,6 +30,7 @@ function Login () {
 
     const data = await response.json()
     if (response.ok) {
+    login({ email })
     navigate("/")
     } else {
     setMessage(data.message)

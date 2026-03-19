@@ -20,7 +20,6 @@ app.post("/login", (req, res) => {
         message: "Email et mot de passe requis"
     })
     }
-
         if (email !== fakeUser.email || password !== fakeUser.password) {
     return res.status(401).json({
         message: "Identifiants invalides"
