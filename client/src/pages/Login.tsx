@@ -31,7 +31,7 @@ function Login () {
     const data = await response.json()
     if (response.ok) {
     login({ email })
-    navigate("/")
+    navigate("/App")
     } else {
     setMessage(data.message)
     }
