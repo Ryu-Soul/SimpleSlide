@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 type Presentation = {
@@ -64,8 +65,9 @@ export default function SlidesPage() {
         <ul>
           {presentations.map((presentation) => (
             <li key={presentation.id}>
-              <h2>{presentation.title}</h2>
-              <p>Créée le : {presentation.createdAt}</p>
+                <h2>{presentation.title}</h2>
+                <p>Créée le : {presentation.createdAt}</p>
+                <NavLink to={`/app/presentations/${presentation.id}`}>Ouvrir</NavLink>
             </li>
           ))}
         </ul>

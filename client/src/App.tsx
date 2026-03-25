@@ -9,6 +9,7 @@ import CreateSlidePage from "./pages/CreateSlidePage";
 import ProtectedRoute from "./components/ProtectedRoute"
 import PublicRoute from "./components/PublicRoute"
 import RegisterPage from "./pages/RegisterPage";
+import PresentationPage from "./pages/PresentationPage";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             <Route index element={<AppPage />} />
             <Route path="slides" element={<SlidesPage />} />
             <Route path="create" element={<CreateSlidePage />} />
+            <Route path="presentations/:id" element={<PresentationPage />} />
           </Route>
       </Routes>
       
