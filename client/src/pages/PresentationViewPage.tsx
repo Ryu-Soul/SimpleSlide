@@ -16,6 +16,8 @@ type Step = {
     title?: string;
     subtitle?: string;
     text?: string;
+    imageUrl?: string;
+    caption?: string;
   };
   position: number;
 };
@@ -133,6 +135,18 @@ export default function PresentationViewPage() {
               <p>{currentStep.content.text}</p>
             </div>
           )}
+          {currentStep.type === "image" && (
+            <div>
+                {currentStep.content.imageUrl && (
+                <img
+                    src={currentStep.content.imageUrl}
+                    alt={currentStep.content.caption || "Illustration"}
+                    style={{ maxWidth: "100%", maxHeight: "70vh" }}
+                />
+          )}
+    <p>{currentStep.content.caption}</p>
+  </div>
+)}
         </article>
       )}
 

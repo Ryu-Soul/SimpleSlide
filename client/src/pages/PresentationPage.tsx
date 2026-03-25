@@ -9,6 +9,8 @@ type Step = {
     title?: string;
     subtitle?: string;
     text?: string;
+    imageUrl?: string;
+    caption?: string;
   };
   position: number;
 };
@@ -25,6 +27,8 @@ export default function PresentationPage() {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const [caption, setCaption] = useState("");
 
   async function fetchSteps() {
     if (!id) {
@@ -69,17 +73,24 @@ export default function PresentationPage() {
     let content: Record<string, string> = {};
 
     if (type === "title") {
-      content = {
+    content = {
         title,
         subtitle,
-      };
+    };
     }
 
     if (type === "text") {
-      content = {
+    content = {
         title,
         text,
-      };
+    };
+    }
+
+    if (type === "image") {
+    content = {
+        imageUrl,
+        caption,
+    };
     }
 
     try {
@@ -107,6 +118,8 @@ export default function PresentationPage() {
       setTitle("");
       setSubtitle("");
       setText("");
+      setImageUrl("");
+      setCaption("");
 
       await fetchSteps();
     } catch {
@@ -130,6 +143,7 @@ export default function PresentationPage() {
           <select id="type" value={type} onChange={(e) => setType(e.target.value)}>
             <option value="title">Title</option>
             <option value="text">Text</option>
+            <option value="image">Image</option>
           </select>
         </div>
 
@@ -166,6 +180,32 @@ export default function PresentationPage() {
           </div>
         )}
 
+        {type === "image" && (
+        <>
+            <div>
+            <label htmlFor="imageUrl">URL de l'image</label>
+            <input
+                id="imageUrl"
+                type="text"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="https://..."
+            />
+            </div>
+
+            <div>
+            <label htmlFor="caption">Légende</label>
+            <input
+                id="caption"
+                type="text"
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+                placeholder="Description de l'image"
+            />
+            </div>
+        </>
+        )}
+
         {error && <p>{error}</p>}
         {message && <p>{message}</p>}
 
@@ -197,6 +237,19 @@ export default function PresentationPage() {
                 <div>
                   <h3>{step.content.title}</h3>
                   <p>{step.content.text}</p>
+                </div>
+              )}
+
+              {step.type === "image" && (
+                <div>
+                    {step.content.imageUrl && (
+                    <img
+                        src={step.content.imageUrl}
+                        alt={step.content.caption || "Illustration"}
+                        style={{ maxWidth: "300px" }}
+                    />
+                    )}
+                    <p>{step.content.caption}</p>
                 </div>
               )}
             </li>
