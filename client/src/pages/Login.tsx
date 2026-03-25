@@ -66,6 +66,7 @@ function Login () {
                     <NavLink to="/">Retour à l'accueil</NavLink>
                 </form>
                 {message && <p>{message}</p>}
+                <p>Pas encore de compte ? <NavLink to="/register">Créer un compte</NavLink></p>
             </section>
         </main>
     )

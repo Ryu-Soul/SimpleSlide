@@ -14,7 +14,7 @@ export default function AppShell() {
         </div>
 
         <nav className="app-shell__nav">
-          <NavLink to="/app">Dashboard</NavLink>
+          <NavLink to="/app" end>Dashboard</NavLink>
           <NavLink to="/app/slides">Mes slides</NavLink>
           <NavLink to="/app/create">Créer une présentation</NavLink>
         </nav>
