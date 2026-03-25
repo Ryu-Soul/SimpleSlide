@@ -195,6 +195,33 @@ app.get("/presentations/:id", async (req, res) => {
   }
 });
 
+app.delete("/steps/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const existingStep = await db.get(
+      "SELECT * FROM steps WHERE id = ?",
+      [id]
+    );
+
+    if (!existingStep) {
+      return res.status(404).json({
+        message: "Étape introuvable",
+      });
+    }
+
+    await db.run("DELETE FROM steps WHERE id = ?", [id]);
+
+    return res.status(200).json({
+      message: "Étape supprimée avec succès",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Erreur lors de la suppression de l'étape",
+    });
+  }
+});
+
 async function startServer() {
   db = await initDb();
 

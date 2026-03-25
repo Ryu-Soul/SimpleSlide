@@ -129,6 +129,28 @@ export default function PresentationPage() {
     }
   }
 
+    async function handleDeleteStep(stepId: number) {
+    setError("");
+    setMessage("");
+
+    try {
+        const response = await fetch(`http://localhost:5000/steps/${stepId}`, {
+        method: "DELETE",
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+        setError(data.message || "Erreur lors de la suppression");
+        return;
+        }
+
+        setMessage("Étape supprimée avec succès");
+        await fetchSteps();
+    } catch {
+        setError("Erreur serveur");
+    }
+}
   if (isLoading) {
     return <p>Chargement...</p>;
   }
@@ -252,6 +274,8 @@ export default function PresentationPage() {
                     <p>{step.content.caption}</p>
                 </div>
               )}
+
+              <button type="button" onClick={() => handleDeleteStep(step.id)}>Supprimer</button>
             </li>
           ))}
         </ul>
