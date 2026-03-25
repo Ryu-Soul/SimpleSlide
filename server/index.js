@@ -54,6 +54,62 @@ app.post("/login", async (req, res) => {
   });
 });
 
+app.post("/presentations", async (req, res) => {
+  const { userId, title } = req.body;
+
+  if (!userId || !title) {
+    return res.status(400).json({
+      message: "userId et title sont requis",
+    });
+  }
+
+  const createdAt = new Date().toISOString();
+
+  try {
+    const result = await db.run(
+      "INSERT INTO presentations (userId, title, createdAt) VALUES (?, ?, ?)",
+      [userId, title, createdAt]
+    );
+
+    return res.status(201).json({
+      message: "Présentation créée avec succès",
+      presentation: {
+        id: result.lastID,
+        userId,
+        title,
+        createdAt,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Erreur lors de la création de la présentation",
+    });
+  }
+});
+
+app.get("/presentations", async (req, res) => {
+  const { userId } = req.query;
+
+  if (!userId) {
+    return res.status(400).json({
+      message: "userId est requis",
+    });
+  }
+
+  try {
+    const presentations = await db.all(
+      "SELECT * FROM presentations WHERE userId = ? ORDER BY createdAt DESC",
+      [userId]
+    );
+
+    return res.status(200).json({ presentations });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Erreur lors de la récupération des présentations",
+    });
+  }
+});
+
 async function startServer() {
   db = await initDb();
 
