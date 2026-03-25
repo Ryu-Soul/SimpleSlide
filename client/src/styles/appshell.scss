@@ -1,0 +1,35 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-shell__sidebar {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.app-shell__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.app-shell__content {
+  flex: 1;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .app-shell {
+    flex-direction: row;
+  }
+
+  .app-shell__sidebar {
+    width: 260px;
+    min-height: 100vh;
+    border-right: 1px solid #ddd;
+    border-bottom: none;
+  }
+}
