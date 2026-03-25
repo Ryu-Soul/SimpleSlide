@@ -172,6 +172,29 @@ app.get("/steps", async (req, res) => {
   }
 });
 
+app.get("/presentations/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const presentation = await db.get(
+      "SELECT * FROM presentations WHERE id = ?",
+      [id]
+    );
+
+    if (!presentation) {
+      return res.status(404).json({
+        message: "Présentation introuvable",
+      });
+    }
+
+    return res.status(200).json({ presentation });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Erreur lors de la récupération de la présentation",
+    });
+  }
+});
+
 async function startServer() {
   db = await initDb();
 

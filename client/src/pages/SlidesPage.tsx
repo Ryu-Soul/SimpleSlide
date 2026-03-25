@@ -68,6 +68,7 @@ export default function SlidesPage() {
                 <h2>{presentation.title}</h2>
                 <p>Créée le : {presentation.createdAt}</p>
                 <NavLink to={`/app/presentations/${presentation.id}`}>Ouvrir</NavLink>
+                <NavLink to={`/app/presentations/${presentation.id}/view`}>Voir</NavLink>
             </li>
           ))}
         </ul>

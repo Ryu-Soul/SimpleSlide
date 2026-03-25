@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import PublicRoute from "./components/PublicRoute"
 import RegisterPage from "./pages/RegisterPage";
 import PresentationPage from "./pages/PresentationPage";
+import PresentationViewPage from "./pages/PresentationViewPage";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="slides" element={<SlidesPage />} />
             <Route path="create" element={<CreateSlidePage />} />
             <Route path="presentations/:id" element={<PresentationPage />} />
+            <Route path="presentations/:id/view" element={<PresentationViewPage />} />
           </Route>
       </Routes>
       
