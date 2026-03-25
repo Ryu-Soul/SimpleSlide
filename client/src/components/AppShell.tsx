@@ -1,13 +1,9 @@
-import { Link } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/appshell.scss";
 
-type AppShellProps = {
-  children: React.ReactNode;
-};
-
-export default function AppShell({ children }: AppShellProps) {
-  const { user, logout } = useAuth();
+export default function AppShell() {
+  const { user } = useAuth();
 
   return (
     <div className="app-shell">
@@ -18,14 +14,15 @@ export default function AppShell({ children }: AppShellProps) {
         </div>
 
         <nav className="app-shell__nav">
-          <Link to="/app">Dashboard</Link>
-          <button type="button">Mes slides</button>
-          <button type="button">Créer une présentation</button>
+          <NavLink to="/app">Dashboard</NavLink>
+          <NavLink to="/app/slides">Mes slides</NavLink>
+          <NavLink to="/app/create">Créer une présentation</NavLink>
         </nav>
-
       </aside>
 
-      <main className="app-shell__content">{children}</main>
+      <main className="app-shell__content">
+        <Outlet />
+      </main>
     </div>
   );
 }
