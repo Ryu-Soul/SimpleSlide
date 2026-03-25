@@ -30,7 +30,7 @@ function Login () {
 
     const data = await response.json()
     if (response.ok) {
-    login({ email })
+    login(data.user);
     navigate("/App")
     } else {
     setMessage(data.message)
