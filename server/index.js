@@ -110,6 +110,68 @@ app.get("/presentations", async (req, res) => {
   }
 });
 
+app.post("/steps", async (req, res) => {
+  const { presentationId, type, content, position } = req.body;
+
+  if (!presentationId || !type || !content || position === undefined) {
+    return res.status(400).json({
+      message: "presentationId, type, content et position sont requis",
+    });
+  }
+
+  try {
+    const result = await db.run(
+      "INSERT INTO steps (presentationId, type, content, position) VALUES (?, ?, ?, ?)",
+      [presentationId, type, JSON.stringify(content), position]
+    );
+
+    return res.status(201).json({
+      message: "Étape créée avec succès",
+      step: {
+        id: result.lastID,
+        presentationId,
+        type,
+        content,
+        position,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Erreur lors de la création de l'étape",
+    });
+  }
+});
+
+app.get("/steps", async (req, res) => {
+  const { presentationId } = req.query;
+
+  if (!presentationId) {
+    return res.status(400).json({
+      message: "presentationId est requis",
+    });
+  }
+
+  try {
+    const steps = await db.all(
+      "SELECT * FROM steps WHERE presentationId = ? ORDER BY position ASC",
+      [presentationId]
+    );
+
+    const formattedSteps = steps.map((step) => ({
+      ...step,
+      content: JSON.parse(step.content),
+    }));
+
+    return res.status(200).json({
+      steps: formattedSteps,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Erreur lors de la récupération des étapes",
+    });
+  }
+});
+
 async function startServer() {
   db = await initDb();
 
